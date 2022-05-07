@@ -5,8 +5,8 @@
     
     <entry>
       <title>ubuntu之cuda安装</title>
-      <link href="/2022/03/18/ubuntu%E4%BD%BF%E7%94%A8anaconda%E5%AE%89%E8%A3%85cuda/"/>
-      <url>/2022/03/18/ubuntu%E4%BD%BF%E7%94%A8anaconda%E5%AE%89%E8%A3%85cuda/</url>
+      <link href="/2022/03/18/%E8%AE%B0%E5%BD%95%E8%B4%B4-AI%E5%B9%B3%E5%8F%B0ubuntu%E4%BD%BF%E7%94%A8anaconda%E5%AE%89%E8%A3%85cuda/"/>
+      <url>/2022/03/18/%E8%AE%B0%E5%BD%95%E8%B4%B4-AI%E5%B9%B3%E5%8F%B0ubuntu%E4%BD%BF%E7%94%A8anaconda%E5%AE%89%E8%A3%85cuda/</url>
       
         <content type="html"><![CDATA[<h1 id="使用anaconda在Ubuntu20-04安装cuda8-0"><a href="#使用anaconda在Ubuntu20-04安装cuda8-0" class="headerlink" title="使用anaconda在Ubuntu20.04安装cuda8.0"></a>使用anaconda在Ubuntu20.04安装cuda8.0</h1><h2 id="显卡驱动安装"><a href="#显卡驱动安装" class="headerlink" title="显卡驱动安装"></a>显卡驱动安装</h2><ol><li>sudo ubuntu-drivers autoinstall</li><li>sudo reboot</li><li>nvidia-smi  </li></ol><h2 id="cudacnn及cudatoolkit安装"><a href="#cudacnn及cudatoolkit安装" class="headerlink" title="cudacnn及cudatoolkit安装"></a>cudacnn及cudatoolkit安装</h2><ol><li>conda install cudnn=5.1</li><li>conda install cudatoolkit=8.0</li></ol>]]></content>
       
@@ -21,33 +21,6 @@
         <tags>
             
             <tag> 编程实践 </tag>
-            
-        </tags>
-      
-    </entry>
-    
-    
-    
-    <entry>
-      <title>HTML-js-1</title>
-      <link href="/2022/02/20/%E5%89%8D%E7%AB%AF-js-1/"/>
-      <url>/2022/02/20/%E5%89%8D%E7%AB%AF-js-1/</url>
-      
-        <content type="html"><![CDATA[<h1 id="初识js"><a href="#初识js" class="headerlink" title="初识js"></a>初识js</h1><h2 id="编程语言和标记语言的区别"><a href="#编程语言和标记语言的区别" class="headerlink" title="编程语言和标记语言的区别"></a>编程语言和标记语言的区别</h2><ul><li>编程语言有很强的逻辑和行为能力，在编程语言中会看到例如if else、for等具有逻辑和行为能力的指令，这是主动的  </li><li>标记语言不用于向计算机发出指令，常用于格式化和链接，标记语言的存在是用来被读取的，它是被动的</li></ul>]]></content>
-      
-      
-      <categories>
-          
-          <category> 前端学习 </category>
-          
-      </categories>
-      
-      
-        <tags>
-            
-            <tag> 编程实践 </tag>
-            
-            <tag> 前端 </tag>
             
         </tags>
       
