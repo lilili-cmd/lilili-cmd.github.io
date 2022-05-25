@@ -7,7 +7,7 @@
 <meta property="og:locale" content="en_US">
 <meta property="og:image" content="https://pic.52112.com/2019/11/28/JPG-191128_1/PuBTLKRCc9_small.jpg">
 <meta property="article:published_time" content="2022-05-25T03:21:29.000Z">
-<meta property="article:modified_time" content="2022-05-25T11:26:16.105Z">
+<meta property="article:modified_time" content="2022-05-25T12:24:27.480Z">
 <meta property="article:author" content="李雷雨">
 <meta property="article:tag" content="前端">
 <meta property="article:tag" content="js原理">
@@ -54,7 +54,7 @@
   isHome: false,
   isHighlightShrink: false,
   isToc: true,
-  postUpdate: '2022-05-25 19:26:16'
+  postUpdate: '2022-05-25 20:24:27'
 }</script><noscript><style type="text/css">
   #nav {
     opacity: 1
@@ -143,7 +143,7 @@
       }
     }
     detectApple()
-    })(window)</script><meta name="generator" content="Hexo 5.4.0"></head><body><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img is-center"><img src="https://pic3.zhimg.com/80/v2-4e743342ff696c2a6e998946f7f1e77a_1440w.jpg?source=1940ef5c" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="site-data is-center"><div class="data-item"><a href="/archives/"><div class="headline">Articles</div><div class="length-num">12</div></a></div><div class="data-item"><a href="/tags/"><div class="headline">Tags</div><div class="length-num">6</div></a></div><div class="data-item"><a href="/categories/"><div class="headline">Categories</div><div class="length-num">6</div></a></div></div><hr/></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url('https://pic.52112.com/2019/11/28/JPG-191128_1/PuBTLKRCc9_small.jpg')"><nav id="nav"><span id="blog_name"><a id="site-name" href="/">欢迎来到李哈哈的小世界！</a></span><div id="menus"><div id="search-button"><a class="site-page social-icon search"><i class="fas fa-search fa-fw"></i><span> Search</span></a></div><div id="toggle-menu"><a class="site-page"><i class="fas fa-bars fa-fw"></i></a></div></div></nav><div id="post-info"><h1 class="post-title">promise</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">Created</span><time class="post-meta-date-created" datetime="2022-05-25T03:21:29.000Z" title="Created 2022-05-25 11:21:29">2022-05-25</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">Updated</span><time class="post-meta-date-updated" datetime="2022-05-25T11:26:16.105Z" title="Updated 2022-05-25 19:26:16">2022-05-25</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/%E5%89%8D%E7%AB%AF%E5%AD%A6%E4%B9%A0/">前端学习</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title="promise"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">Post View:</span><span id="busuanzi_value_page_pv"></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="post-content" id="article-container"><h1 id="Promise知识点梳理"><a href="#Promise知识点梳理" class="headerlink" title="Promise知识点梳理"></a>Promise知识点梳理</h1><p>之前对promise进行过一定的了解，但是仍然对其中部分内容理解不够全面，今天就针对Promise进行一下小小的总结。</p>
+    })(window)</script><meta name="generator" content="Hexo 5.4.0"></head><body><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img is-center"><img src="https://pic3.zhimg.com/80/v2-4e743342ff696c2a6e998946f7f1e77a_1440w.jpg?source=1940ef5c" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="site-data is-center"><div class="data-item"><a href="/archives/"><div class="headline">Articles</div><div class="length-num">12</div></a></div><div class="data-item"><a href="/tags/"><div class="headline">Tags</div><div class="length-num">6</div></a></div><div class="data-item"><a href="/categories/"><div class="headline">Categories</div><div class="length-num">6</div></a></div></div><hr/></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url('https://pic.52112.com/2019/11/28/JPG-191128_1/PuBTLKRCc9_small.jpg')"><nav id="nav"><span id="blog_name"><a id="site-name" href="/">欢迎来到李哈哈的小世界！</a></span><div id="menus"><div id="search-button"><a class="site-page social-icon search"><i class="fas fa-search fa-fw"></i><span> Search</span></a></div><div id="toggle-menu"><a class="site-page"><i class="fas fa-bars fa-fw"></i></a></div></div></nav><div id="post-info"><h1 class="post-title">promise</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">Created</span><time class="post-meta-date-created" datetime="2022-05-25T03:21:29.000Z" title="Created 2022-05-25 11:21:29">2022-05-25</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">Updated</span><time class="post-meta-date-updated" datetime="2022-05-25T12:24:27.480Z" title="Updated 2022-05-25 20:24:27">2022-05-25</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/%E5%89%8D%E7%AB%AF%E5%AD%A6%E4%B9%A0/">前端学习</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title="promise"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">Post View:</span><span id="busuanzi_value_page_pv"></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="post-content" id="article-container"><h1 id="Promise知识点梳理"><a href="#Promise知识点梳理" class="headerlink" title="Promise知识点梳理"></a>Promise知识点梳理</h1><p>之前对promise进行过一定的了解，但是仍然对其中部分内容理解不够全面，今天就针对Promise进行一下小小的总结。</p>
 <h2 id="Promise的出现"><a href="#Promise的出现" class="headerlink" title="Promise的出现"></a>Promise的出现</h2><p>ECMAScript6及之后的几个版本加大了对异步编程机制的支持，而Promise引用类型就是ECMAScript6因此新增的类型，使得优雅地定义和组织异步逻辑成为现实，而且在此之后地几个版本更是增加了使用async和await关键字定义异步函数的机制。</p>
 <h3 id="异步编程"><a href="#异步编程" class="headerlink" title="异步编程"></a>异步编程</h3><p>JavaScript是一种单线程事件循环模型，同步操作和异步操作是代码所要依赖的核心机制，异步行为是为了优化因计算量大而时间长的操作（其实当我们不想因为某个异步操作而阻塞线程执行时，都可以使用异步编程）</p>
 <h3 id="同步和异步"><a href="#同步和异步" class="headerlink" title="同步和异步"></a>同步和异步</h3><ul>
@@ -163,8 +163,15 @@ setTimeout(()=&gt;&#123;
     &#125;
 
 &#125;,1000)
+&#125;
+const successCallback = (x)=&gt;&#123;
+double(x,(y)=&gt;console.log(`Success:$&#123;y&#125;`))
+&#125;
+const faliureCallback = (e) =&gt; &#123;
+console.log(`Failure:$&#123;e&#125;`)
+&#125;
+double(3,successCallback,failureCallback)  
 </code></pre>
-<p>}<br>const successCallback = (x)=&gt;{<br>    double(x,(y)=&gt;console.log(<code>Success:$&#123;y&#125;</code>))<br>}<br>const faliureCallback = (e) =&gt; {<br>    console.log(<code>Failure:$&#123;e&#125;</code>)<br>}<br>double(3,successCallback,failureCallback)  </p>
 <p>以上为回调嵌套的一个实例，大约2000ms之后输出Success:12<br>可以看出上述代码看上去还是比较复杂的</p>
 <h3 id="Promise"><a href="#Promise" class="headerlink" title="Promise"></a>Promise</h3><p>于是就出现了Promise,翻译成中文是“期约”，这是对尚不存在结果的一个替身。这个名字在1976年就被提出，到了2010年，CommonJS项目实现的Promises/A规范日益流行，2012年Promises/A+组织fork了CommonJS的Promises/A建议，并以相同的名字制定了Promises/A+规范，成为了ECMAScript6规范实现的范本。  </p>
 <h2 id="Promise基础"><a href="#Promise基础" class="headerlink" title="Promise基础"></a>Promise基础</h2><h3 id="Promise状态"><a href="#Promise状态" class="headerlink" title="Promise状态"></a>Promise状态</h3><p>pending  -&gt; fulfilled<br>pending  -&gt; rejected<br>而且Promise的状态是私有的，不能直接通过JavaScript检测到，也不能被外部JavaScript代码修改，这样可以避免根据读取到的Promise状态，以同步方式处理Promise对象</p>
