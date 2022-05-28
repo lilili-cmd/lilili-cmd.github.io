@@ -1,0 +1,245 @@
+<!DOCTYPE html><html lang="en" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"><title>浏览器工作原理 | 欢迎来到李哈哈的小世界！</title><meta name="keywords" content="前端,浏览器"><meta name="author" content="李雷雨"><meta name="copyright" content="李雷雨"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="浏览器工作原理本文整理自bilibili up主“objtube的卢克儿”大佬的视频《浏览器是如何运作的》 简化的浏览器结构图用户界面用于展示除标签页之外的其他用户界面内容  浏览器引擎用于在用户界面和渲染引擎之间传递数据  渲染引擎（核心与灵魂）被称为浏览器内核，IE:Trident,Firefox:Gecko,Safari:webkit，Chrome使用基于webkit改造优化的Blink,O">
+<meta property="og:type" content="article">
+<meta property="og:title" content="浏览器工作原理">
+<meta property="og:url" content="http://example.com/2022/05/27/how-browser-works/index.html">
+<meta property="og:site_name" content="欢迎来到李哈哈的小世界！">
+<meta property="og:description" content="浏览器工作原理本文整理自bilibili up主“objtube的卢克儿”大佬的视频《浏览器是如何运作的》 简化的浏览器结构图用户界面用于展示除标签页之外的其他用户界面内容  浏览器引擎用于在用户界面和渲染引擎之间传递数据  渲染引擎（核心与灵魂）被称为浏览器内核，IE:Trident,Firefox:Gecko,Safari:webkit，Chrome使用基于webkit改造优化的Blink,O">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://pic.52112.com/2019/11/28/JPG-191128_1/PuBTLKRCc9_small.jpg">
+<meta property="article:published_time" content="2022-05-27T08:30:05.000Z">
+<meta property="article:modified_time" content="2022-05-28T03:50:50.625Z">
+<meta property="article:author" content="李雷雨">
+<meta property="article:tag" content="前端">
+<meta property="article:tag" content="浏览器">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://pic.52112.com/2019/11/28/JPG-191128_1/PuBTLKRCc9_small.jpg"><link rel="shortcut icon" href="/img/favicon.png"><link rel="canonical" href="http://example.com/2022/05/27/how-browser-works/"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css" media="print" onload="this.media='all'"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox.css" media="print" onload="this.media='all'"><script>const GLOBAL_CONFIG = { 
+  root: '/',
+  algolia: undefined,
+  localSearch: {"path":"search.xml","languages":{"hits_empty":"We didn't find any results for the search: ${query}"}},
+  translate: undefined,
+  noticeOutdate: undefined,
+  highlight: {"plugin":"highlighjs","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false},
+  copy: {
+    success: 'Copy successfully',
+    error: 'Copy error',
+    noSupport: 'The browser does not support'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '',
+  date_suffix: {
+    just: 'Just',
+    min: 'minutes ago',
+    hour: 'hours ago',
+    day: 'days ago',
+    month: 'months ago'
+  },
+  copyright: undefined,
+  lightbox: 'fancybox',
+  Snackbar: undefined,
+  source: {
+    justifiedGallery: {
+      js: 'https://cdn.jsdelivr.net/npm/flickr-justified-gallery@2/dist/fjGallery.min.js',
+      css: 'https://cdn.jsdelivr.net/npm/flickr-justified-gallery@2/dist/fjGallery.min.css'
+    }
+  },
+  isPhotoFigcaption: false,
+  islazyload: false,
+  isAnchor: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: '浏览器工作原理',
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isToc: true,
+  postUpdate: '2022-05-28 11:50:50'
+}</script><noscript><style type="text/css">
+  #nav {
+    opacity: 1
+  }
+  .justified-gallery img {
+    opacity: 1
+  }
+
+  #recent-posts time,
+  #post-meta time {
+    display: inline !important
+  }
+</style></noscript><script>(win=>{
+    win.saveToLocal = {
+      set: function setWithExpiry(key, value, ttl) {
+        if (ttl === 0) return
+        const now = new Date()
+        const expiryDay = ttl * 86400000
+        const item = {
+          value: value,
+          expiry: now.getTime() + expiryDay,
+        }
+        localStorage.setItem(key, JSON.stringify(item))
+      },
+
+      get: function getWithExpiry(key) {
+        const itemStr = localStorage.getItem(key)
+
+        if (!itemStr) {
+          return undefined
+        }
+        const item = JSON.parse(itemStr)
+        const now = new Date()
+
+        if (now.getTime() > item.expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return item.value
+      }
+    }
+  
+    win.getScript = url => new Promise((resolve, reject) => {
+      const script = document.createElement('script')
+      script.src = url
+      script.async = true
+      script.onerror = reject
+      script.onload = script.onreadystatechange = function() {
+        const loadState = this.readyState
+        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+        script.onload = script.onreadystatechange = null
+        resolve()
+      }
+      document.head.appendChild(script)
+    })
+  
+      win.activateDarkMode = function () {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      win.activateLightMode = function () {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+      const t = saveToLocal.get('theme')
+    
+          if (t === 'dark') activateDarkMode()
+          else if (t === 'light') activateLightMode()
+        
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        if (asideStatus === 'hide') {
+          document.documentElement.classList.add('hide-aside')
+        } else {
+          document.documentElement.classList.remove('hide-aside')
+        }
+      }
+    
+    const detectApple = () => {
+      if(/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)){
+        document.documentElement.classList.add('apple')
+      }
+    }
+    detectApple()
+    })(window)</script><meta name="generator" content="Hexo 5.4.0"></head><body><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img is-center"><img src="https://pic3.zhimg.com/80/v2-4e743342ff696c2a6e998946f7f1e77a_1440w.jpg?source=1940ef5c" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="site-data is-center"><div class="data-item"><a href="/archives/"><div class="headline">Articles</div><div class="length-num">13</div></a></div><div class="data-item"><a href="/tags/"><div class="headline">Tags</div><div class="length-num">7</div></a></div><div class="data-item"><a href="/categories/"><div class="headline">Categories</div><div class="length-num">6</div></a></div></div><hr/></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url('https://pic.52112.com/2019/11/28/JPG-191128_1/PuBTLKRCc9_small.jpg')"><nav id="nav"><span id="blog_name"><a id="site-name" href="/">欢迎来到李哈哈的小世界！</a></span><div id="menus"><div id="search-button"><a class="site-page social-icon search"><i class="fas fa-search fa-fw"></i><span> Search</span></a></div><div id="toggle-menu"><a class="site-page"><i class="fas fa-bars fa-fw"></i></a></div></div></nav><div id="post-info"><h1 class="post-title">浏览器工作原理</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">Created</span><time class="post-meta-date-created" datetime="2022-05-27T08:30:05.000Z" title="Created 2022-05-27 16:30:05">2022-05-27</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">Updated</span><time class="post-meta-date-updated" datetime="2022-05-28T03:50:50.625Z" title="Updated 2022-05-28 11:50:50">2022-05-28</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/%E5%89%8D%E7%AB%AF%E5%AD%A6%E4%B9%A0/">前端学习</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title="浏览器工作原理"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">Post View:</span><span id="busuanzi_value_page_pv"></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="post-content" id="article-container"><h1 id="浏览器工作原理"><a href="#浏览器工作原理" class="headerlink" title="浏览器工作原理"></a>浏览器工作原理</h1><p>本文整理自bilibili up主“objtube的卢克儿”大佬的视频《浏览器是如何运作的》</p>
+<h2 id="简化的浏览器结构图"><a href="#简化的浏览器结构图" class="headerlink" title="简化的浏览器结构图"></a>简化的浏览器结构图</h2><h3 id="用户界面"><a href="#用户界面" class="headerlink" title="用户界面"></a>用户界面</h3><p>用于展示除标签页之外的其他用户界面内容 </p>
+<h3 id="浏览器引擎"><a href="#浏览器引擎" class="headerlink" title="浏览器引擎"></a>浏览器引擎</h3><p>用于在用户界面和渲染引擎之间传递数据 </p>
+<h3 id="渲染引擎（核心与灵魂）"><a href="#渲染引擎（核心与灵魂）" class="headerlink" title="渲染引擎（核心与灵魂）"></a>渲染引擎（核心与灵魂）</h3><p>被称为浏览器内核，IE:Trident,Firefox:Gecko,Safari:webkit，Chrome使用基于webkit改造优化的Blink,Opera和Edge:Blink<br>渲染用户请求的页面内容，内含许多小的功能模块：  </p>
+<ul>
+<li>负责网络请求的网络模块  </li>
+<li>用于解析和执行js的js解析器  <h3 id="数据持久层"><a href="#数据持久层" class="headerlink" title="数据持久层"></a>数据持久层</h3>帮助浏览器存储各种数据  <h2 id="多进程浏览器"><a href="#多进程浏览器" class="headerlink" title="多进程浏览器"></a>多进程浏览器</h2>浏览器是运行在操作系统上的一个应用程序，每个应用程序必须至少启动一个进程来执行其功能。<br>当我们启动某个程序时，就会创建一个进程执行任务代码，同时为该进程分配内存空间，该应用程序的状态都保存在该内存空间，当应用关闭时，该内存空间就会被回收；由于不同进程之间分配的内存空间是独立的，所以两个进程之间需要传递数据时，需要通过进程间通信管道IPC来传递。很多应用程序都是多进程的结构，这样可以避免某一个进程被卡死而对整个应用程序产生影响。<br>进程可以将任务分成更多细小的任务，然后通过创建多个线程并行执行不同的任务。同一进程下的线程之间是可以直接通信共享数据的。  <h3 id="早期：单进程浏览器结构"><a href="#早期：单进程浏览器结构" class="headerlink" title="早期：单进程浏览器结构"></a>早期：单进程浏览器结构</h3>早期的浏览器并不是多进程的，而是单进程的，一个进程中有页面线程负责页面渲染和展示，JS线程执行JS代码，以及其他线程。<br>缺点：  </li>
+</ul>
+<ol>
+<li>不稳定，一个线程的卡死可能导致整个进程出问题，如打开多个标签页，其中一个标签页卡死可能导致整个浏览器无法正常运作；  </li>
+<li>不安全，JS线程可以随意访问浏览器进程内的所有数据；  </li>
+<li>不流畅，一个进程负责太多事情导致运行效率降低。  <h3 id="改进：多进程浏览器结构"><a href="#改进：多进程浏览器结构" class="headerlink" title="改进：多进程浏览器结构"></a>改进：多进程浏览器结构</h3>根据进程的不同功能拆解浏览器  </li>
+</ol>
+<ul>
+<li>浏览器进程<br>负责控制Chrome浏览器除标签页外的用户界面，包括地址栏、书签、后退和前进按钮，以及负责与浏览器的其他进程协调工作；  </li>
+<li>网络进程负责发起和接受网络请求；  </li>
+<li>GPU进程负责整个浏览器界面的渲染；</li>
+<li>插件进程负责控制网站使用的所有插件；  </li>
+<li>渲染器进程用来控制显示tab标签内的所有内容，浏览器在默认状态下可能（与启动Chrome时选择的进程模型有关）会为每个标签页创建一个渲染器进程。  <h2 id="输入网址回车后浏览器内部发生了什么？"><a href="#输入网址回车后浏览器内部发生了什么？" class="headerlink" title="输入网址回车后浏览器内部发生了什么？"></a>输入网址回车后浏览器内部发生了什么？</h2></li>
+</ul>
+<ol>
+<li>当在地址栏输入地址时，浏览器进程的UI线程会捕捉输入内容：  </li>
+</ol>
+<ul>
+<li>如果是一个网址，则UI线程会启动一个网络线程请求DNS进行域名解析，然后开始连接服务器获取数据；  </li>
+<li>如果不是一个网址而是一串关键词，浏览器就知道是要进行搜索，就会使用默认配置的搜索引擎来查询。  </li>
+</ul>
+<ol start="2">
+<li>网络线程获取到数据之后发生什么事？（重点）  </li>
+</ol>
+<ul>
+<li><p>网络线程获取到数据之后，会通过SafeBrowsing检查站点是否为恶意站点，是则警告⚠并阻止访问，通过检查之后网络线程会通知UI线程“我就要准备好了，到你了”；  </p>
+</li>
+<li><p>UI线程创建一个渲染器进程（Renderer Thread）来渲染页面；  </p>
+</li>
+<li><p>浏览器进程通过IPC管道将数据传递给渲染器进程，正式进入渲染器流程；  </p>
+</li>
+<li><p>渲染器进程接到的数据就是html,渲染器进程的核心任务就是把html、css、js、image等资源渲染成用户可以交互的web页面。<br>① 渲染器进程的主线程将html进行解析，构造DOM（文档对象模型，是浏览器对页面在其内部的表示形式，可以通过JS与之交互）树结构：html首先通过tokeniser标记化通过词法分析将输入的html内容解析成多个标记，根据识别后的标记进行DOM树构造，在DOM树构造过程中会创建document对象，然后以document为根节点的DOM树不断进行修改，向其中添加各种元素；<br>② html中通常包含css、图片等资源，需要通过网络下载或者直接在缓存中获取，这些资源不会阻塞html的解析，因为它们不会影响DOM树的生成，但当html解析遇到scrtpt标签时，就会停止html解析流程进而加载执行脚本（因为浏览器并不知道JS的执行是否会改变当前页面的HTML结构，如果JS代码中使用了document.write()方法修改html，则之前的html解析就没有意义了，这就是要把script标签放在合适的位置的原因，或者使用async/defer属性异步加载执行JS）；<br>③ 此时得到一棵DOM树，但不知道DOM树上每个节点应该长什么样子，主线程需要解析CSS并确定每个DOM节点的计算样式（即使没有提供自定义的CSS样式，浏览器也会有默认的样式），在知道DOM结构和每个节点的CSS样式之后，接下来需要知道每个节点需要放在页面的哪个位置上（该节点的坐标以及该节点要占用多大区域），这个阶段被称为layout阶段，主线程通过遍历dom和计算好的样式来生成layout tree,layout tree上的每个节点都记录了（x,y）坐标和边框范围（DOM tree和layout tree并不是一一对应的，如display:none、伪类），layout tree和最后展示在屏幕上的节点是对应的。接下来还需要知道以什么样的顺序绘制节点（z-index），主线程遍历layout tree创建一个绘制记录表，该表记录了绘制的顺序，这个阶段被称为绘制(paint)，将上述信息转换为像素点展示在屏幕上，这个行为叫做栅格化；<br>④ 主线程将前边获取到的信息给到合成器线程，合成器线程在栅格化、合成之后生成了一个合成器帧，然后合成器帧通过IPC传送给浏览器进程，接着浏览器进程将合成器帧传送到GPU，然后GPU渲染展示到屏幕上，此时可以看到页面内容；<br>⑤ 当页面内容发生变化，如滚动了当前页面，就会生成一个新的合成器帧，新的帧再传递给GPU并渲染到页面中。  </p>
+<p>  当我们改变一个元素的尺寸位置属性时，会重新进行样式计算、布局（layout）绘制（paint）以及后边的所有流程，这种行为成为重排；当我们改变某个元素的颜色属性时，不会重新触发布局，但还是会重新触发样式计算和绘制，这个是重绘。可以发现重排和重绘都会占用主线程，而JS也是运行在主线程，会出现抢占执行时间的问题，如果写了一个不断需要重排重绘的动画，浏览器则需要在每一帧运行样式计算、布局和绘制的操作，我们知道当页面以每秒60帧的刷新率时才不会让用户感觉到卡顿，如果运行动画时还有大量的JS需要执行，当在一帧的时间内布局和绘制结束后如果还有剩余时间，JS会拿到主线程的使用权，如果JS使用时间过长会导致在下一帧开始时JS没有及时归还主线程，导致下一帧动画没有及时渲染，会出现页面卡顿。优化手段：① requestAnimationFrame()方法会在每一帧被调用，把JS运行任务分成一些更小的任务块，在每一帧时间用完前暂停JS的执行，归还主线程；② 栅格化的整个流程不占用主线程，只需要合成器线程和栅格线程，无需和JS抢夺线程，而通过CSS中的transform动画属性实现的动画不会经过布局和绘制，而是直接运行在合成器线程和栅格线程中，还节省了动画时间</p>
+</li>
+</ul>
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta">Author: </span><span class="post-copyright-info"><a href="mailto:undefined">李雷雨</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta">Link: </span><span class="post-copyright-info"><a href="http://example.com/2022/05/27/how-browser-works/">http://example.com/2022/05/27/how-browser-works/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta">Copyright Notice: </span><span class="post-copyright-info">All articles in this blog are licensed under <a target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">CC BY-NC-SA 4.0</a> unless stating additionally.</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/%E5%89%8D%E7%AB%AF/">前端</a><a class="post-meta__tags" href="/tags/%E6%B5%8F%E8%A7%88%E5%99%A8/">浏览器</a></div><div class="post_share"><div class="social-share" data-image="https://pic.52112.com/2019/11/28/JPG-191128_1/PuBTLKRCc9_small.jpg" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/social-share.js/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/social-share.js/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><div class="next-post pull-full"><a href="/2022/05/25/about-promise/"><img class="next-cover" src="https://pic.52112.com/2019/11/28/JPG-191128_1/PuBTLKRCc9_small.jpg" onerror="onerror=null;src='/img/404.jpg'" alt="cover of next post"><div class="pagination-info"><div class="label">Next Post</div><div class="next_info">promise</div></div></a></div></nav><div class="relatedPosts"><div class="headline"><i class="fas fa-thumbs-up fa-fw"></i><span>Related Articles</span></div><div class="relatedPosts-list"><div><a href="/2022/05/08/react1/" title="react简介"><img class="cover" src="https://pic.52112.com/2019/11/28/JPG-191128_1/PuBTLKRCc9_small.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2022-05-08</div><div class="title">react简介</div></div></a></div><div><a href="/2022/01/30/%E5%89%8D%E7%AB%AF-css/" title="CSS"><img class="cover" src="https://pic.52112.com/2019/11/28/JPG-191128_1/PuBTLKRCc9_small.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2022-01-30</div><div class="title">CSS</div></div></a></div><div><a href="/2022/01/27/%E5%89%8D%E7%AB%AF-html/" title="HTML-1"><img class="cover" src="https://pic.52112.com/2019/11/28/JPG-191128_1/PuBTLKRCc9_small.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2022-01-27</div><div class="title">HTML-1</div></div></a></div><div><a href="/2022/05/25/about-promise/" title="promise"><img class="cover" src="https://pic.52112.com/2019/11/28/JPG-191128_1/PuBTLKRCc9_small.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2022-05-25</div><div class="title">promise</div></div></a></div></div></div><hr/><div id="post-comment"><div class="comment-head"><div class="comment-headline"><i class="fas fa-comments fa-fw"></i><span> Comment</span></div><div id="comment-switch"><span class="first-comment">Valine</span><span class="switch-btn"></span><span class="second-comment">Disqus</span></div></div><div class="comment-wrap"><div><div class="vcomment" id="vcomment"></div></div><div><div id="disqus_thread"></div></div></div></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-calendar"><div class="card-content"><div class="item-headline"><i class="far fa-calendar-alt" aria-hidden="true"></i><span>日历</span></div><div class="widget-wrap"></div><div class="widget" id="calendar"></div></div></div><div class="card-widget card-info"><div class="is-center"><div class="avatar-img"><img src="https://pic3.zhimg.com/80/v2-4e743342ff696c2a6e998946f7f1e77a_1440w.jpg?source=1940ef5c" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info__name">李雷雨</div><div class="author-info__description"></div></div><div class="card-info-data is-center"><div class="card-info-data-item"><a href="/archives/"><div class="headline">Articles</div><div class="length-num">13</div></a></div><div class="card-info-data-item"><a href="/tags/"><div class="headline">Tags</div><div class="length-num">7</div></a></div><div class="card-info-data-item"><a href="/categories/"><div class="headline">Categories</div><div class="length-num">6</div></a></div></div><a class="button--animated" id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/xxxxxx"><i class="fab fa-github"></i><span>Follow Me</span></a></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn card-announcement-animation"></i><span>Announcement</span></div><div class="announcement_content">This is my Blog</div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>Catalog</span><span class="toc-percentage"></span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E6%B5%8F%E8%A7%88%E5%99%A8%E5%B7%A5%E4%BD%9C%E5%8E%9F%E7%90%86"><span class="toc-number">1.</span> <span class="toc-text">浏览器工作原理</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%AE%80%E5%8C%96%E7%9A%84%E6%B5%8F%E8%A7%88%E5%99%A8%E7%BB%93%E6%9E%84%E5%9B%BE"><span class="toc-number">1.1.</span> <span class="toc-text">简化的浏览器结构图</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%94%A8%E6%88%B7%E7%95%8C%E9%9D%A2"><span class="toc-number">1.1.1.</span> <span class="toc-text">用户界面</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%B5%8F%E8%A7%88%E5%99%A8%E5%BC%95%E6%93%8E"><span class="toc-number">1.1.2.</span> <span class="toc-text">浏览器引擎</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%B8%B2%E6%9F%93%E5%BC%95%E6%93%8E%EF%BC%88%E6%A0%B8%E5%BF%83%E4%B8%8E%E7%81%B5%E9%AD%82%EF%BC%89"><span class="toc-number">1.1.3.</span> <span class="toc-text">渲染引擎（核心与灵魂）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%95%B0%E6%8D%AE%E6%8C%81%E4%B9%85%E5%B1%82"><span class="toc-number">1.1.4.</span> <span class="toc-text">数据持久层</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%A4%9A%E8%BF%9B%E7%A8%8B%E6%B5%8F%E8%A7%88%E5%99%A8"><span class="toc-number">1.2.</span> <span class="toc-text">多进程浏览器</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%97%A9%E6%9C%9F%EF%BC%9A%E5%8D%95%E8%BF%9B%E7%A8%8B%E6%B5%8F%E8%A7%88%E5%99%A8%E7%BB%93%E6%9E%84"><span class="toc-number">1.2.1.</span> <span class="toc-text">早期：单进程浏览器结构</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%94%B9%E8%BF%9B%EF%BC%9A%E5%A4%9A%E8%BF%9B%E7%A8%8B%E6%B5%8F%E8%A7%88%E5%99%A8%E7%BB%93%E6%9E%84"><span class="toc-number">1.2.2.</span> <span class="toc-text">改进：多进程浏览器结构</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%BE%93%E5%85%A5%E7%BD%91%E5%9D%80%E5%9B%9E%E8%BD%A6%E5%90%8E%E6%B5%8F%E8%A7%88%E5%99%A8%E5%86%85%E9%83%A8%E5%8F%91%E7%94%9F%E4%BA%86%E4%BB%80%E4%B9%88%EF%BC%9F"><span class="toc-number">1.3.</span> <span class="toc-text">输入网址回车后浏览器内部发生了什么？</span></a></li></ol></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>Recent Post</span></div><div class="aside-list"><div class="aside-list-item"><a class="thumbnail" href="/2022/05/27/how-browser-works/" title="浏览器工作原理"><img src="https://pic.52112.com/2019/11/28/JPG-191128_1/PuBTLKRCc9_small.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="浏览器工作原理"/></a><div class="content"><a class="title" href="/2022/05/27/how-browser-works/" title="浏览器工作原理">浏览器工作原理</a><time datetime="2022-05-27T08:30:05.000Z" title="Created 2022-05-27 16:30:05">2022-05-27</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2022/05/25/about-promise/" title="promise"><img src="https://pic.52112.com/2019/11/28/JPG-191128_1/PuBTLKRCc9_small.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="promise"/></a><div class="content"><a class="title" href="/2022/05/25/about-promise/" title="promise">promise</a><time datetime="2022-05-25T03:21:29.000Z" title="Created 2022-05-25 11:21:29">2022-05-25</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2022/05/08/react1/" title="react简介"><img src="https://pic.52112.com/2019/11/28/JPG-191128_1/PuBTLKRCc9_small.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="react简介"/></a><div class="content"><a class="title" href="/2022/05/08/react1/" title="react简介">react简介</a><time datetime="2022-05-08T01:42:57.000Z" title="Created 2022-05-08 09:42:57">2022-05-08</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2022/05/07/%E7%9F%A5%E8%AF%86%E7%82%B91/" title="HTML-iframe元素"><img src="https://pic.52112.com/2019/11/28/JPG-191128_1/PuBTLKRCc9_small.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="HTML-iframe元素"/></a><div class="content"><a class="title" href="/2022/05/07/%E7%9F%A5%E8%AF%86%E7%82%B91/" title="HTML-iframe元素">HTML-iframe元素</a><time datetime="2022-05-07T02:51:38.000Z" title="Created 2022-05-07 10:51:38">2022-05-07</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2022/03/18/%E8%AE%B0%E5%BD%95%E8%B4%B4-AI%E5%B9%B3%E5%8F%B0ubuntu%E4%BD%BF%E7%94%A8anaconda%E5%AE%89%E8%A3%85cuda/" title="记录贴：ubuntu之cuda安装（AI平台）"><img src="https://pic.52112.com/2019/11/28/JPG-191128_1/PuBTLKRCc9_small.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="记录贴：ubuntu之cuda安装（AI平台）"/></a><div class="content"><a class="title" href="/2022/03/18/%E8%AE%B0%E5%BD%95%E8%B4%B4-AI%E5%B9%B3%E5%8F%B0ubuntu%E4%BD%BF%E7%94%A8anaconda%E5%AE%89%E8%A3%85cuda/" title="记录贴：ubuntu之cuda安装（AI平台）">记录贴：ubuntu之cuda安装（AI平台）</a><time datetime="2022-03-18T08:13:43.000Z" title="Created 2022-03-18 16:13:43">2022-03-18</time></div></div></div></div></div></div></main><footer id="footer"><div id="footer-wrap"><div class="copyright">&copy;2020 - 2022 By 李雷雨</div><div class="framework-info"><span>Framework </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>Theme </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="Read Mode"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="Switch Between Light And Dark Mode"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="Toggle between single-column and double-column"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside_config" type="button" title="Setting"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="Table Of Contents"><i class="fas fa-list-ul"></i></button><a id="to_comment" href="#post-comment" title="Scroll To Comments"><i class="fas fa-comments"></i></a><button id="go-up" type="button" title="Back To Top"><i class="fas fa-arrow-up"></i></button></div></div><div id="local-search"><div class="search-dialog"><nav class="search-nav"><span class="search-dialog-title">Local search</span><span id="loading-status"></span><button class="search-close-button"><i class="fas fa-times"></i></button></nav><div class="is-center" id="loading-database"><i class="fas fa-spinner fa-pulse"></i><span>  Loading the Database</span></div><div class="search-wrap"><div id="local-search-input"><div class="local-search-box"><input class="local-search-box--input" placeholder="Search for Posts" type="text"/></div></div><hr/><div id="local-search-results"></div></div></div><div id="search-mask"></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox.umd.js"></script><script src="/js/search/local-search.js"></script><div class="js-pjax"><script>function loadValine () {
+  function initValine () {
+    const valine = new Valine(Object.assign({
+      el: '#vcomment',
+      appId: '',
+      appKey: '',
+      avatar: 'monsterid',
+      serverURLs: '',
+      emojiMaps: "",
+      path: window.location.pathname,
+      visitor: false
+    }, null))
+  }
+
+  if (typeof Valine === 'function') initValine() 
+  else getScript('https://cdn.jsdelivr.net/npm/valine/dist/Valine.min.js').then(initValine)
+}
+
+if ('Valine' === 'Valine' || !false) {
+  if (false) btf.loadComment(document.getElementById('vcomment'),loadValine)
+  else setTimeout(loadValine, 0)
+} else {
+  function loadOtherComment () {
+    loadValine()
+  }
+}</script><script>function loadDisqus () {
+  var disqus_config = function () {
+    this.page.url = 'http://example.com/2022/05/27/how-browser-works/'
+    this.page.identifier = '2022/05/27/how-browser-works/'
+    this.page.title = '浏览器工作原理'
+  };
+
+  window.disqusReset = () => {
+    DISQUS.reset({
+      reload: true,
+      config: disqus_config
+    })
+  }
+
+  if (window.DISQUS) disqusReset()
+  else {
+    (function() { 
+      var d = document, s = d.createElement('script');
+      s.src = 'https://huiling-li.disqus.com/embed.js';
+      s.setAttribute('data-timestamp', +new Date());
+      (d.head || d.body).appendChild(s);
+    })();
+  }
+}
+
+if ('Valine' === 'Disqus' || !false) {
+  if (false) btf.loadComment(document.getElementById('disqus_thread'), loadDisqus)
+  else loadDisqus()
+} else {
+  function loadOtherComment () {
+    loadDisqus()
+  }
+}
+</script></div><script src="/js/calendar.js"></script><script src="/js/languages.js"></script><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div></body></html>
