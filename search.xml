@@ -4,6 +4,33 @@
   
     
     <entry>
+      <title>Vue diff算法原理</title>
+      <link href="/2022/06/04/vue-diff/"/>
+      <url>/2022/06/04/vue-diff/</url>
+      
+        <content type="html"><![CDATA[<h1 id="Vue的虚拟Dom及diff算法原理"><a href="#Vue的虚拟Dom及diff算法原理" class="headerlink" title="Vue的虚拟Dom及diff算法原理"></a>Vue的虚拟Dom及diff算法原理</h1><h2 id="为什么需要虚拟Dom"><a href="#为什么需要虚拟Dom" class="headerlink" title="为什么需要虚拟Dom"></a>为什么需要虚拟Dom</h2><p>在vue等框架之前，是对dom元素直接进行操作从而实现视图更新<br>而在vue中，数据改变-&gt;dom操作-&gt;视图更新（其中数据改变-&gt;dom操作是有框架自动完成的）<br>为了避免每次数据一改就要去操作dom,因此有了虚拟dom,数据改变时不直接操作dom，而是先利用虚拟dom对改变进行计算，再去操作真实dom  </p><h2 id="什么是虚拟Dom"><a href="#什么是虚拟Dom" class="headerlink" title="什么是虚拟Dom"></a>什么是虚拟Dom</h2><p>利用js表示的对象  </p><h2 id="diff算法的优化实现"><a href="#diff算法的优化实现" class="headerlink" title="diff算法的优化实现"></a>diff算法的优化实现</h2><ul><li>只会比较同一层级，不跨级比较  </li><li>标签名不同则直接删除，不继续深度比较  </li><li>标签名相同，key相同（v-for中的key值），则认为是相同节点，不继续深度比较<h2 id="diff算法详情"><a href="#diff算法详情" class="headerlink" title="diff算法详情"></a>diff算法详情</h2>vue2中的diff算法是在虚拟Dom生成之后的patch函数中被调用，主要利用了“递归+双指针”   <h3 id="patch函数执行时机"><a href="#patch函数执行时机" class="headerlink" title="patch函数执行时机"></a>patch函数执行时机</h3></li></ul><ol><li>patch函数首先会在首次页面渲染的时候使用，把vnode渲染到空的容器中  </li><li>后续页面更新时，把新的vnode替换掉旧的vnode<br>也就是说,patch函数的参数是两个，其中第一个参数可以是element(即dom元素，对应首次渲染)或者vnode(对应后续更新) <h3 id="patch主要流程步骤"><a href="#patch主要流程步骤" class="headerlink" title="patch主要流程步骤"></a>patch主要流程步骤</h3></li><li>执行生命周期相关  </li><li>对第一个参数进行判断，看是否为vnode（即看是否是首次渲染），如果不是vnode则创建空的vnode，并关联dom元素，将返回的这个空的vnode作为oldVnode  </li><li>判断oldVnode和新的vnode是否为相同的vnode,即比较两个vnode的key和标签是否一样  </li><li>1 如果key和标签中有一个不相同，则利用createElm()创建新的Dom元素，这个函数返回虚拟dom对应的真实Dom元素，这个真实Dom创建之后通过insertBefore()插入Dom元素并删除老的Dom元素  </li><li>2 若key和标签都相同，则对两个vnode做更新即可（使用<code>patchVnode()</code>函数）<br>该函数主要：<br>①将oldVnode.ele赋值给新的vnode.ele（这个值是第2步关联dom元素的结果，就是需要知道当前的dom需要更新到哪个（真实）dom元素上）；②获取新老vnode的children;③情况判断：a. vnode无text有children -&gt; 各种判断：新老都有children -&gt; 使用<code>updateChildren()</code>对children进行更新……一系列删除替换  b.vnode有text无children -&gt;以新的vnode为准执行各种删除替换  <h3 id="在上述情况中的updateChildren-函数中，会定义一些索引和一些vnode-这是diff最小量更新的核心，通过4个指针来实现"><a href="#在上述情况中的updateChildren-函数中，会定义一些索引和一些vnode-这是diff最小量更新的核心，通过4个指针来实现" class="headerlink" title="在上述情况中的updateChildren()函数中，会定义一些索引和一些vnode,这是diff最小量更新的核心，通过4个指针来实现"></a>在上述情况中的updateChildren()函数中，会定义一些索引和一些vnode,这是diff最小量更新的核心，通过4个指针来实现</h3><img src="/vue-diff/updateChildren%E5%87%BD%E6%95%B0.png" alt="updateChildren函数"><br><img src="/vue-diff/%E5%9B%9B%E4%B8%AA%E6%8C%87%E9%92%88.png" alt="四个指针"><br>下面做一个循环，循环结束的条件是start指针&gt;end指针<br>在循环中进行对比，对比主要包含4种情况：老开始-新开始，老结束-新结束，老开始-新结束，老结束-新开始，两两比较是否为相同的vnode(key和标签相同)，相同则做<code>patchVnode()</code>  (递归)，然后进行指针的移动（start的指针往后移动，end的指针往前移动）。如果两两比较都不相同（四种情况都没命中），则拿到新的start指针的key,然后在老的children中找有没有某个节点对应这个key，没找到就创建新的元素，找到的话就继续判断标签是否相同，不相同创建新元素，相同的话patchVnode()将两个节点更新（四种都没命中的话好像不需要更新指针） </li></ol>]]></content>
+      
+      
+      <categories>
+          
+          <category> 前端学习 </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> 前端 </tag>
+            
+            <tag> vue原理 </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>vue2中数组变化的限制和解决方法</title>
       <link href="/2022/06/03/vue2-array/"/>
       <url>/2022/06/03/vue2-array/</url>
