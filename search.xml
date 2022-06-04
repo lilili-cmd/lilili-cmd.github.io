@@ -4,6 +4,33 @@
   
     
     <entry>
+      <title>js-leetcode-error1</title>
+      <link href="/2022/06/04/js-leetcode-error1/"/>
+      <url>/2022/06/04/js-leetcode-error1/</url>
+      
+        <content type="html"><![CDATA[<p>leetcode第5题（最长回文子串），为了保存中间状态，创建了一个二维数组，开始时使用<code>let isPalindrome = Array.from(new Array(s.length).fill(new Array(s.length).fill(0)))</code>的方法，就会导致数组元素一改改一列的情况，如下所示，查阅资料发现这是因为数组在js中是引用类型所产生的结果，因此必须采用双层for循环嵌套的方式定义js二维数组，之后再利用动态规划的思路解决这个问题，记录一下  </p><pre><code class="javascript"> /** * @param &#123;string&#125; s * @return &#123;string&#125; */var longestPalindrome = function(s) &#123;    //let isPalindrome = Array.from(new Array(s.length).fill(new Array(s.length).fill(0)))    let isPalindrome = new Array()    for(let i = 0;i&lt;s.length;i++) &#123;        isPalindrome[i] = new Array()        for(let j = 0;j&lt;s.length;j++) &#123;            isPalindrome[i][j] = 0        &#125;    &#125;    let maxLength = 1    let maxStr = s.charAt[0]    console.log(s.length)    for(let i = 0;i&lt;s.length;i++)&#123;        console.log(i)        console.log(isPalindrome)        isPalindrome[i][i] = 1 //单个字符构成回文字        if(s.charAt(i)==s.charAt(i+1)&amp;&amp;i&lt;s.length-1)&#123;            console.log(&#39;char1&#39;,s.charAt(i))            console.log(&#39;char2&#39;,s.charAt(i+1))            isPalindrome[i][i+1] = 1 //两个相邻且相同的字符构成回文字            maxLength = 2            maxStr = s.slice(i,i+2)        &#125;        &#125;        console.log(isPalindrome)            for(let gap = 2;gap&lt;s.length;gap++)&#123;            for(let i =0;i&lt;s.length-gap;i++)&#123;                if(isPalindrome[i+1][i+gap-1]==1&amp;&amp;s.charAt(i)==s.charAt(i+gap))                &#123;                       console.log(isPalindrome[i+1][i+gap-1])                    console.log(s.slice(i+1,i+gap))                    console.log(s.slice(i,i+gap+1))                    isPalindrome[i][i+gap] = 1                    if(gap+1&gt;maxLength) &#123;                        maxLength = gap+1                        maxStr = s.slice(i,i+gap+1)                        console.log(&#39;max&#39;,maxStr)                    &#125;                &#125;            &#125;        &#125;        console.log(isPalindrome)        return maxStr&#125;;</code></pre><p>原方式的输出，一改一列   </p><pre><code>0  [  [ 0, 0, 0, 0, 0 ],  [ 0, 0, 0, 0, 0 ],  [ 0, 0, 0, 0, 0 ],  [ 0, 0, 0, 0, 0 ],  [ 0, 0, 0, 0, 0 ]  ]  1  [  [ 1, 1, 0, 0, 0 ],  [ 1, 1, 0, 0, 0 ],  [ 1, 1, 0, 0, 0 ],  [ 1, 1, 0, 0, 0 ],  [ 1, 1, 0, 0, 0 ]  ]  2  [  [ 1, 1, 1, 0, 0 ],  [ 1, 1, 1, 0, 0 ],  [ 1, 1, 1, 0, 0 ],  [ 1, 1, 1, 0, 0 ],  [ 1, 1, 1, 0, 0 ]  ]  3  [  [ 1, 1, 1, 1, 0 ],  [ 1, 1, 1, 1, 0 ],  [ 1, 1, 1, 1, 0 ],  [ 1, 1, 1, 1, 0 ],  [ 1, 1, 1, 1, 0 ]  ]  4  [  [ 1, 1, 1, 1, 1 ],  [ 1, 1, 1, 1, 1 ],  [ 1, 1, 1, 1, 1 ],  [ 1, 1, 1, 1, 1 ],  [ 1, 1, 1, 1, 1 ]  ]  5  [  [ 1, 1, 1, 1, 1, 1 ],  [ 1, 1, 1, 1, 1, 1 ],  [ 1, 1, 1, 1, 1, 1 ],  [ 1, 1, 1, 1, 1, 1 ],  [ 1, 1, 1, 1, 1, 1 ]  ]  </code></pre>]]></content>
+      
+      
+      <categories>
+          
+          <category> 前端学习 </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> 前端 </tag>
+            
+            <tag> 编程实践 </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>Vue diff算法原理</title>
       <link href="/2022/06/04/vue-diff/"/>
       <url>/2022/06/04/vue-diff/</url>
